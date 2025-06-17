@@ -5,9 +5,9 @@ from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 TOKEN = os.getenv("BOT_TOKEN")
 bot = telebot.TeleBot(TOKEN)
 
-VIDEO_CHANNEL_ID = -1002844800834
-VIDEO_MESSAGE_ID = 10  # Replace with actual message ID
-MAIN_CHANNEL_LINK = "https://t.me/+1NwgRomSPlNjYTNl"
+VIDEO_CHANNEL_ID = int(os.getenv("VIDEO_CHANNEL_ID"))
+VIDEO_MESSAGE_ID = int(os.getenv("VIDEO_MESSAGE_ID"))
+MAIN_CHANNEL_LINK = os.getenv("MAIN_CHANNEL_LINK")
 
 user_shares = {}
 
@@ -26,13 +26,11 @@ def start_handler(message):
 def callback_handler(call):
     if call.data == "unlock":
         chat_id = call.message.chat.id
-        bot.send_message(chat_id,
-            f"📢 Please forward this message to 3 different Telegram groups:
-
-"
-            f"🔥 LEAKED VIDEO 🔥
-Watch full video only here!
-👉 https://t.me/yourbot?start=unlock")
+        bot.send_message(
+            chat_id,
+            f"📢 Please forward this message to 3 different Telegram groups:\n\n"
+            f"🔥 LEAKED VIDEO 🔥\nWatch full video only here!\n👉 https://t.me/yourbot?start=unlock"
+        )
 
 @bot.message_handler(content_types=['text'])
 def forward_check(message):
